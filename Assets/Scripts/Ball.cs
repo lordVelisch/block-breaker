@@ -21,7 +21,7 @@ public class Ball : MonoBehaviour {
 
         if (isStarted && Input.GetMouseButtonDown(0)) {
             print("Lauch ball");
-            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(2f, 8f);
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-2f, 8f);
             isStarted = false;
         }
 	}

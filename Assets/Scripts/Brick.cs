@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour {
 
-    public int maxHits;
-    public int hits;
+    public Sprite[] hitSprites;
 
-    public GameObject hit1;
-    public GameObject hit2;
-    public GameObject hit3;
+    private int maxHits;
+    private int hits;
+    private LevelManager levelManager;
+
 	// Use this for initialization
 	void Start () {
         hits = 0;
-	}
+        levelManager = GameObject.FindObjectOfType<LevelManager>();
+        maxHits = hitSprites.Length + 1;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,16 +24,36 @@ public class Brick : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        bool isBreakable = (this.tag == "Breakable");
+        if (isBreakable)
+        {
+            HandleCollision();
+        }
+    }
+
+    void HandleCollision()
+    {
         hits++;
         Debug.Log("Brick has been hit. " + (maxHits - hits) + " hits left");
-        if ((maxHits - hits) <= 0)
+        if (maxHits <= hits)
         {
             Destroy(this.gameObject);
         }
-        else if (maxHits - hits == 1) {
-            GameObject temp = this.gameObject;
-            Destroy(this.gameObject);
-            Instantiate(hit1);
+        else
+        {
+            LoadScript();
         }
+    }
+
+    void LoadScript()
+    {
+        if (hitSprites[(maxHits - hits) - 1]) {
+            GetComponent<SpriteRenderer>().sprite = hitSprites[(maxHits - hits) - 1];
+        }
+    }
+
+    void SimulateWin()
+    {
+        levelManager.LoadNextLevel();
     }
 }

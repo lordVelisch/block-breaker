@@ -11,6 +11,7 @@ public class Ball : MonoBehaviour {
     private Vector3 paddleToBallVector; 
 
 	void Start () {
+        paddle = GameObject.FindObjectOfType<PaddleScript>();
         paddleToBallVector = this.transform.position - paddle.transform.position;
 	}
 	
@@ -21,7 +22,7 @@ public class Ball : MonoBehaviour {
 
         if (isStarted && Input.GetMouseButtonDown(0)) {
             print("Lauch ball");
-            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(-2f, 8f);
+            this.gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(+2f, 8f);
             isStarted = false;
         }
 	}

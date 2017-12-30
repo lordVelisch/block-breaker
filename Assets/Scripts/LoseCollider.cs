@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class LoseCollider : MonoBehaviour {
 
-    public LevelManager manager;
+    private LevelManager manager;
+
+    private void Start()
+    {
+        manager = GameObject.FindObjectOfType<LevelManager>();
+    }
 
     void OnTriggerEnter2D(Collider2D trigger)
     {
         print("Trigger");
-        manager.LoadLevel("Win");
+        manager.LoadLevel("Loose");
 
     }
 
